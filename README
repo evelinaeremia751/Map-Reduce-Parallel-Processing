@@ -1,0 +1,15 @@
+Tema 1 APD Eremia Evelina-Andreea
+
+Am implementat tema 1 stocand fisierele intr-un vector. Exista o singura functie atat pentru thread-urile mapper, cat si pentru cele reducer.
+Am ales aceasta implementare pentru a le sincroniza mai usor. In aceasta am verificat id-urile pentru a diferentia tipurile de thread-uri. Mapper-ul ia cate un fisier din vector si il prelucreaza. 
+Am folosit un mutex pentru a asigura accesul unui singur mapper la zona critica. In continuare,
+deschid fisierul, citesc din el, pentru fiecare element verific daca este o putere a unui numar intre 2 si nr de reduceri+1,
+apoi adaug numarul vectorul de seturi corespunzator thread-ului de map.
+Pentru a verifica puterea, am folosit check_if_power. Aceasta returneaza o valoare booleana, avand ca argumente numarul si exponentul.
+Power_aux e o functie auxiliara ce verifica daca numarul e putere perfecta a exponentului dat, folosind cautarea binara.
+Intre thread-urile de map si reducer, am pus o bariera care se deschide cand au ajuns la ea toate thread-urile pornite (mapper+reducer).
+Pentru reducer am combinat toate set-urile corespunzatoare unui exponent intr-un set final si am scris in fisierul out corespunzator rezultatul, numarul de
+valori unice.
+Listele generate de mapper le-am salvat in val_to_process, un vector de vectori de set-uri, de unde am preluat listele corespunzatoare fiecarui exponent in reducer. 
+Pentru a transmite argumentele catre functia f, am folosit structura argument_parametru.
+In main am initializat structura val_to_process, am definit mutexul si bariera si am creat thread-urile, iar la final, le-am dat join.   
